@@ -29,7 +29,6 @@ def get_waveform_and_label(file_path):
   return waveform, label
 
 def get_spectrogram(waveform):
-  # Padding for files with less than 16000 samples
   zero_padding = tf.zeros([16000] - tf.shape(waveform), dtype=tf.float32)
 
   # Concatenate audio with padding so that all audio clips will be of the 
@@ -44,8 +43,6 @@ def get_spectrogram(waveform):
   return spectrogram
 
 def plot_spectrogram(spectrogram, ax):
-  # Convert to frequencies to log scale and transpose so that the time is
-  # represented in the x-axis (columns).
   log_spec = np.log(spectrogram.T)
   height = log_spec.shape[0]
   X = np.arange(16000, step=height + 1)
